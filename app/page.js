@@ -362,15 +362,7 @@ y = 45;
   row("Rating", rating);
 
   // Footer
-  doc.setFontSize(8);
-  doc.setTextColor(120, 120, 120);
-  doc.text(
-    "Disclaimer: This report is an early-stage screening output. It is not investment advice. All assumptions should be validated through technical, commercial, legal and financial due diligence.",
-    14,
-    285,
-    { maxWidth: pageWidth - 28 }
-  );
-if (y > 260) {
+  if (y > 260) {
   doc.addPage();
   y = 20;
 }
