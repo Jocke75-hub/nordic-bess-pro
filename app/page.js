@@ -215,6 +215,49 @@ ${score >= 75
     }
   }
 
+  function exportPDF() {
+  const content = `
+NORDIC BESS PRO – INVESTMENT REPORT
+
+Project:
+Power: ${mw} MW
+Capacity: ${mwh} MWh
+
+CAPEX:
+${formatEUR(capex)} (${formatEUR(capexPerMWh)} / MWh)
+
+OPEX:
+${formatEUR(opex)} per year
+
+Revenue:
+FCR: ${formatEUR(fcrRevenue)}
+Arbitrage: ${formatEUR(arbitrageRevenue)}
+Total: ${formatEUR(revenue)}
+
+Financials:
+EBITDA: ${formatEUR(ebitda)}
+Payback: ${payback.toFixed(1)} years
+IRR: ${irr.toFixed(1)}%
+NPV: ${formatEUR(npv)}
+
+Break-even CAPEX:
+${formatEUR(breakEvenCapexPerMWh)} / MWh
+
+Score:
+${score}/100
+
+Generated via Nordic BESS Pro
+  `;
+
+  const blob = new Blob([content], { type: "text/plain;charset=utf-8;" });
+  const link = document.createElement("a");
+
+  link.href = URL.createObjectURL(blob);
+  link.download = "BESS_Investment_Report.txt";
+
+  link.click();
+}
+  
   const inputStyle = { width: "100%", padding: "10px", borderRadius: "10px", border: "1px solid #d1d5db", marginTop: "4px", marginBottom: "12px", fontSize: "16px" };
   const cardStyle = { background: "white", padding: "18px", borderRadius: "18px", boxShadow: "0 8px 25px rgba(0,0,0,0.08)", marginBottom: "16px" };
   const metricStyle = { background: "#f8fafc", padding: "14px", borderRadius: "14px", border: "1px solid #e5e7eb" };
@@ -431,6 +474,23 @@ ${score >= 75
           <button onClick={() => setShowSummary(!showSummary)} style={buttonStyle("#111827")}>
             {showSummary ? "Hide Investor Summary" : "Generate Investor Summary"}
           </button>
+
+<button
+  onClick={exportPDF}
+  style={{
+    marginTop: "10px",
+    background: "#111827",
+    color: "white",
+    border: "none",
+    borderRadius: "12px",
+    padding: "12px 16px",
+    cursor: "pointer",
+    fontSize: "15px",
+    fontWeight: "bold"
+  }}
+>
+  Export Report
+</button>
 
           {showSummary && (
             <div style={{ marginTop: "16px" }}>
