@@ -287,10 +287,10 @@ doc.setTextColor(255, 255, 255);
 
 // LEFT
 doc.setFontSize(16);
-doc.text("Nordic BESS Pro", 14, 16);
+doc.text("NexaTrade Oy Ltd", 14, 16);
 
 doc.setFontSize(10);
-doc.text("Investment Report", 14, 24);
+doc.text("Nordic BESS Investment Report", 14, 24);
 
 // CENTER
 doc.setFontSize(10);
