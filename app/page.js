@@ -279,6 +279,10 @@ function exportPDF() {
   doc.setFillColor(15, 23, 42);
   doc.rect(0, 0, pageWidth, 35, "F");
 
+  if (logo) {
+  doc.addImage(logo, "JPEG", 145, 7, 45, 18);
+}
+
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(18);
   doc.text("Nordic BESS Pro", 14, 17);
