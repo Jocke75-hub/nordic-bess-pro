@@ -307,7 +307,13 @@ doc.text(`Generated: ${today}`, 14, 30);
 
 // Continue content below header
 y = 45;
+  
+doc.setFontSize(10);
+doc.setTextColor(80, 80, 80);
+doc.text("Prepared by NexaTrade Oy Ltd", 14, y);
 
+  y += 8;
+  
   // Executive Summary
   doc.setTextColor(0, 0, 0);
   doc.setFontSize(14);
@@ -366,7 +372,12 @@ y = 45;
   doc.addPage();
   y = 20;
 }
-
+  
+y += 10;
+doc.setFontSize(9);
+doc.setTextColor(100, 100, 100);
+doc.text("NexaTrade Oy Ltd – Energy Advisory & Project Development", 14, y);
+  
 y += 10;
 doc.setFontSize(8);
 doc.setTextColor(120, 120, 120);
