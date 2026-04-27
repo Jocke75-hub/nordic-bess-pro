@@ -50,9 +50,36 @@ export default function Home() {
     }
     return ((low + high) / 2) * 100;
   }
+  
+function findBreakEvenCapexPerMWh() {
+  let low = 100000;
+  let high = 1000000;
 
+  for (let i = 0; i < 50; i++) {
+    const mid = (low + high) / 2;
+
+    const testCapex = mwh * mid;
+    const testOpex = testCapex * (opexPercent / 100);
+    const testEbitda = revenue - testOpex;
+
+    const testNPV = testEbitda > 0
+      ? calculateNPV(testCapex, testEbitda, lifetime, discountRate)
+      : -testCapex;
+
+    if (testNPV > 0) {
+      low = mid;
+    } else {
+      high = mid;
+    }
+  }
+
+  return (low + high) / 2;
+}
+  
   const npv = ebitda > 0 ? calculateNPV(capex, ebitda, lifetime, discountRate) : -capex;
   const irr = ebitda > 0 ? calculateIRR(capex, ebitda, lifetime) : 0;
+  
+  const breakEvenCapexPerMWh = findBreakEvenCapexPerMWh();
 
   const fcrShare = revenue > 0 ? fcrRevenue / revenue : 0;
   const arbitrageShareResult = revenue > 0 ? arbitrageRevenue / revenue : 0;
@@ -248,7 +275,39 @@ ${score >= 75
             <div style={metricStyle}><small>NPV</small><h2>{formatEUR(npv)}</h2></div>
           </div>
         </div>
+              
+<div style={cardStyle}>
+  <h3>Break-even CAPEX</h3>
 
+  <div style={{
+    display: "flex",
+    gap: "20px",
+    flexWrap: "wrap",
+    alignItems: "center"
+  }}>
+    
+    <div style={{
+      background: "#111827",
+      color: "white",
+      padding: "20px",
+      borderRadius: "16px",
+      fontSize: "22px",
+      fontWeight: "bold"
+    }}>
+      {formatEUR(breakEvenCapexPerMWh)} / MWh
+    </div>
+
+    <div style={{ maxWidth: "420px" }}>
+      <p style={{ color: "#475569" }}>
+        This is the maximum CAPEX per MWh where the project NPV is approximately zero.
+      </p>
+      <p style={{ color: "#475569" }}>
+        If actual CAPEX is below this level, the project creates value.
+      </p>
+    </div>
+
+  </div>
+</div>
         <div style={cardStyle}>
           <h3>Nordic Bankability Score</h3>
           <div style={{ display: "flex", alignItems: "center", gap: "18px", flexWrap: "wrap" }}>
