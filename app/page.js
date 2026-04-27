@@ -358,6 +358,10 @@ doc.text("Prepared by NexaTrade Oy Ltd", 14, y);
   row("Arbitrage revenue", formatEUR(arbitrageRevenue));
   row("Total annual revenue", formatEUR(revenue));
 
+  if (y > 200) {
+  doc.addPage();
+  y = 20;
+}
   sectionTitle("Financial Output");
   row("EBITDA", formatEUR(ebitda));
   row("Payback", `${payback.toFixed(1)} years`);
