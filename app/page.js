@@ -330,6 +330,13 @@ ${score >= 75
   );
 }
 
+const tableCell = {
+  padding: "10px",
+  borderBottom: "1px solid #e5e7eb",
+  textAlign: "left",
+  fontSize: "14px"
+};
+
 function buttonStyle(color) {
   return {
     background: color,
