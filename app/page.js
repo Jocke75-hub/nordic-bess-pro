@@ -292,7 +292,12 @@ function exportPDF() {
 
   doc.setFontSize(9);
   doc.text(`Generated: ${today}`, pageWidth - 55, 17);
-  doc.text("Prepared for early-stage screening", 14, 32);
+  doc.text(
+  "Prepared for early-stage screening",
+  pageWidth / 2,
+  28,
+  { align: "center" }
+);
 
   y = 45;
 
