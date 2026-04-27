@@ -291,7 +291,7 @@ function exportPDF() {
   doc.text("Investment Report", 14, 25);
 
   doc.setFontSize(9);
-  doc.text(`Generated: ${today}`, pageWidth - 55, 17);
+  doc.text(`Generated: ${today}`, 14, 17);
   doc.text(
   "Prepared for early-stage screening",
   pageWidth / 2,
