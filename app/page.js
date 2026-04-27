@@ -92,6 +92,34 @@ export default function Home() {
       maximumFractionDigits: 0,
     }).format(value);
 
+  function runSensitivity(capexMultiplier) {
+  const adjustedCapex = capex * capexMultiplier;
+  const adjustedOpex = adjustedCapex * (opexPercent / 100);
+  const adjustedEbitda = revenue - adjustedOpex;
+  const adjustedPayback = adjustedEbitda > 0 ? adjustedCapex / adjustedEbitda : 0;
+  const adjustedNPV = adjustedEbitda > 0
+    ? calculateNPV(adjustedCapex, adjustedEbitda, lifetime, discountRate)
+    : -adjustedCapex;
+  const adjustedIRR = adjustedEbitda > 0
+    ? calculateIRR(adjustedCapex, adjustedEbitda, lifetime)
+    : 0;
+
+  return {
+    capex: adjustedCapex,
+    opex: adjustedOpex,
+    ebitda: adjustedEbitda,
+    payback: adjustedPayback,
+    npv: adjustedNPV,
+    irr: adjustedIRR
+  };
+}
+
+const sensitivityCases = [
+  { label: "CAPEX -20%", factor: 0.8 },
+  { label: "Base Case", factor: 1.0 },
+  { label: "CAPEX +20%", factor: 1.2 }
+];
+  
   const summaryText =
 `Nordic BESS Pro – Investor Summary
 
@@ -223,6 +251,43 @@ ${score >= 75
           </div>
         </div>
 
+     <div style={cardStyle}>
+  <h3>CAPEX Sensitivity</h3>
+  <p style={{ color: "#475569" }}>
+    Shows how project economics change if CAPEX moves -20%, base case or +20%.
+  </p>
+
+  <div style={{ overflowX: "auto" }}>
+    <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "12px" }}>
+      <thead>
+        <tr style={{ background: "#f1f5f9" }}>
+          <th style={tableCell}>Case</th>
+          <th style={tableCell}>CAPEX</th>
+          <th style={tableCell}>EBITDA</th>
+          <th style={tableCell}>Payback</th>
+          <th style={tableCell}>IRR</th>
+          <th style={tableCell}>NPV</th>
+        </tr>
+      </thead>
+      <tbody>
+        {sensitivityCases.map((item) => {
+          const s = runSensitivity(item.factor);
+          return (
+            <tr key={item.label}>
+              <td style={tableCell}><strong>{item.label}</strong></td>
+              <td style={tableCell}>{formatEUR(s.capex)}</td>
+              <td style={tableCell}>{formatEUR(s.ebitda)}</td>
+              <td style={tableCell}>{s.payback.toFixed(1)} y</td>
+              <td style={tableCell}>{s.irr.toFixed(1)}%</td>
+              <td style={tableCell}>{formatEUR(s.npv)}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  </div>
+</div>
+          
         <div style={cardStyle}>
           <h3>Investor Summary</h3>
           <button onClick={() => setShowSummary(!showSummary)} style={buttonStyle("#111827")}>
