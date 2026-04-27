@@ -120,6 +120,26 @@ const sensitivityCases = [
   { label: "CAPEX +20%", factor: 1.2 }
 ];
   
+const irrCurveData = [
+  { label: "-30%", factor: 0.7 },
+  { label: "-20%", factor: 0.8 },
+  { label: "-10%", factor: 0.9 },
+  { label: "Base", factor: 1.0 },
+  { label: "+10%", factor: 1.1 },
+  { label: "+20%", factor: 1.2 },
+  { label: "+30%", factor: 1.3 }
+].map((item) => {
+  const s = runSensitivity(item.factor);
+  return {
+    ...item,
+    irr: s.irr,
+    npv: s.npv,
+    capex: s.capex
+  };
+});
+
+const maxIrr = Math.max(...irrCurveData.map((item) => item.irr), 1);
+  
   const summaryText =
 `Nordic BESS Pro – Investor Summary
 
@@ -286,6 +306,65 @@ ${score >= 75
       </tbody>
     </table>
   </div>
+</div>
+<div style={cardStyle}>
+  <h3>IRR Curve – CAPEX Sensitivity</h3>
+  <p style={{ color: "#475569" }}>
+    Visualizes how IRR changes when CAPEX moves from -30% to +30%.
+  </p>
+
+  <div style={{
+    display: "flex",
+    alignItems: "end",
+    gap: "12px",
+    height: "260px",
+    padding: "20px",
+    background: "#f8fafc",
+    borderRadius: "16px",
+    border: "1px solid #e5e7eb",
+    overflowX: "auto"
+  }}>
+    {irrCurveData.map((item) => (
+      <div key={item.label} style={{
+        minWidth: "70px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "end",
+        height: "100%"
+      }}>
+        <div style={{
+          fontSize: "13px",
+          fontWeight: "bold",
+          marginBottom: "6px",
+          color: item.irr >= 12 ? "#059669" : item.irr >= 8 ? "#f59e0b" : "#dc2626"
+        }}>
+          {item.irr.toFixed(1)}%
+        </div>
+
+        <div style={{
+          width: "42px",
+          height: `${Math.max(8, (item.irr / maxIrr) * 180)}px`,
+          borderRadius: "10px 10px 0 0",
+          background: item.irr >= 12 ? "#10b981" : item.irr >= 8 ? "#f59e0b" : "#ef4444"
+        }} />
+
+        <div style={{
+          fontSize: "12px",
+          marginTop: "8px",
+          color: "#334155",
+          fontWeight: "bold"
+        }}>
+          {item.label}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <p style={{ marginTop: "12px", color: "#475569" }}>
+    Base CAPEX: <strong>{formatEUR(capex)}</strong>.  
+    Lower CAPEX improves IRR, while higher CAPEX reduces bankability.
+  </p>
 </div>
           
         <div style={cardStyle}>
