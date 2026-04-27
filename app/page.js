@@ -260,7 +260,19 @@ function exportPDF() {
     doc.setTextColor(0, 0, 0);
     doc.text(String(value), x + 4, yPos + 18);
   }
+  function kpiCard(label, value, x, yPos, w = 55, h = 26) {
+  doc.setDrawColor(220, 220, 220);
+  doc.setFillColor(248, 250, 252);
+  doc.roundedRect(x, yPos, w, h, 3, 3, "FD");
 
+  doc.setFontSize(8);
+  doc.setTextColor(90, 90, 90);
+  doc.text(label, x + 4, yPos + 8);
+
+  doc.setFontSize(13);
+  doc.setTextColor(15, 23, 42);
+  doc.text(String(value), x + 4, yPos + 19);
+}
   const rating =
     score >= 75
       ? "Strong early-stage case"
@@ -325,18 +337,18 @@ doc.text("Prepared by NexaTrade Oy Ltd", 14, y);
   doc.text(summaryLines, 14, y);
   y += summaryLines.length * 5 + 6;
 
-  // Metric boxes
-  metricBox("IRR", `${irr.toFixed(1)}%`, 14, y);
-  metricBox("NPV", formatEUR(npv), 75, y);
-  metricBox("Payback", `${payback.toFixed(1)} y`, 136, y);
+  // KPI cards
+kpiCard("IRR", `${irr.toFixed(1)}%`, 14, y);
+kpiCard("NPV", formatEUR(npv), 75, y);
+kpiCard("Payback", `${payback.toFixed(1)} y`, 136, y);
 
-  y += 34;
+y += 34;
 
-  metricBox("Score", `${score}/100`, 14, y);
-  metricBox("CAPEX", formatEUR(capex), 75, y);
-  metricBox("Break-even", `${formatEUR(breakEvenCapexPerMWh)}/MWh`, 136, y);
+kpiCard("Score", `${score}/100`, 14, y);
+kpiCard("Total CAPEX", formatEUR(capex), 75, y);
+kpiCard("Break-even", `${formatEUR(breakEvenCapexPerMWh)}/MWh`, 136, y);
 
-  y += 30;
+y += 36;
 
   sectionTitle("Project Configuration");
   row("Power", `${mw} MW`);
@@ -362,14 +374,28 @@ doc.text("Prepared by NexaTrade Oy Ltd", 14, y);
   doc.addPage();
   y = 20;
 }
-  sectionTitle("Financial Output");
-  row("EBITDA", formatEUR(ebitda));
-  row("Payback", `${payback.toFixed(1)} years`);
-  row("IRR", `${irr.toFixed(1)}%`);
-  row("NPV", formatEUR(npv));
-  row("Break-even CAPEX", `${formatEUR(breakEvenCapexPerMWh)} / MWh`);
-  row("Nordic Bankability Score", `${score}/100`);
-  row("Rating", rating);
+  const requiredSpace = 80;
+
+if (y + requiredSpace > 280) {
+  doc.addPage();
+  y = 20;
+}
+
+sectionTitle("Financial Output");
+
+kpiCard("EBITDA", formatEUR(ebitda), 14, y);
+kpiCard("IRR", `${irr.toFixed(1)}%`, 75, y);
+kpiCard("NPV", formatEUR(npv), 136, y);
+
+y += 34;
+
+kpiCard("Payback", `${payback.toFixed(1)} y`, 14, y);
+kpiCard("Break-even", `${formatEUR(breakEvenCapexPerMWh)}/MWh`, 75, y);
+kpiCard("Score", `${score}/100`, 136, y);
+
+y += 36;
+
+row("Rating", rating);
 
   // Footer
   if (y > 240) {
