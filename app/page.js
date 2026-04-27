@@ -368,7 +368,7 @@ doc.text("Prepared by NexaTrade Oy Ltd", 14, y);
   row("Rating", rating);
 
   // Footer
-  if (y > 260) {
+  if (y > 240) {
   doc.addPage();
   y = 20;
 }
