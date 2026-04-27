@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from "react";
+import jsPDF from "jspdf";
 
 export default function Home() {
   const [mw, setMw] = useState(5);
