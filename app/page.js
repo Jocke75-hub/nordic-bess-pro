@@ -216,40 +216,142 @@ ${score >= 75
     }
   }
 
- function exportPDF() {
+function exportPDF() {
   const doc = new jsPDF();
+  const today = new Date().toLocaleDateString("en-GB");
 
-  let y = 20;
+  const pageWidth = doc.internal.pageSize.getWidth();
+  let y = 18;
 
+  function sectionTitle(title) {
+    y += 8;
+    doc.setFillColor(15, 23, 42);
+    doc.rect(14, y - 5, pageWidth - 28, 9, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(11);
+    doc.text(title, 18, y + 1);
+    y += 10;
+    doc.setTextColor(0, 0, 0);
+  }
+
+  function row(label, value) {
+    doc.setFontSize(10);
+    doc.setTextColor(80, 80, 80);
+    doc.text(label, 18, y);
+    doc.setTextColor(0, 0, 0);
+    doc.text(String(value), 90, y);
+    y += 7;
+  }
+
+  function metricBox(label, value, x, yPos) {
+    doc.setDrawColor(220, 220, 220);
+    doc.setFillColor(248, 250, 252);
+    doc.roundedRect(x, yPos, 55, 24, 3, 3, "FD");
+
+    doc.setFontSize(8);
+    doc.setTextColor(90, 90, 90);
+    doc.text(label, x + 4, yPos + 8);
+
+    doc.setFontSize(13);
+    doc.setTextColor(0, 0, 0);
+    doc.text(String(value), x + 4, yPos + 18);
+  }
+
+  const rating =
+    score >= 75
+      ? "Strong early-stage case"
+      : score >= 55
+      ? "Promising but needs validation"
+      : "Weak or high-risk case";
+
+  const interpretation =
+    score >= 75
+      ? "The project shows strong profitability indicators with positive NPV, attractive IRR and reasonable payback. The case appears promising under current assumptions, subject to validation of grid connection, market access and supplier pricing."
+      : score >= 55
+      ? "The project may be interesting, but the outcome is sensitive to FCR price, arbitrage spread, CAPEX and availability. Further due diligence is recommended before investment decision."
+      : "Under current assumptions, the project does not appear bankable. CAPEX, revenue assumptions or market access would need to improve materially.";
+
+  // Header
+  doc.setFillColor(15, 23, 42);
+  doc.rect(0, 0, pageWidth, 35, "F");
+
+  doc.setTextColor(255, 255, 255);
   doc.setFontSize(18);
-  doc.text("Nordic BESS Pro – Investment Report", 20, y);
+  doc.text("Nordic BESS Pro", 14, 17);
 
-  y += 10;
-  doc.setFontSize(12);
+  doc.setFontSize(10);
+  doc.text("Investment Report", 14, 25);
 
-  doc.text(`Power: ${mw} MW`, 20, y); y += 7;
-  doc.text(`Capacity: ${mwh} MWh`, 20, y); y += 7;
+  doc.setFontSize(9);
+  doc.text(`Generated: ${today}`, pageWidth - 55, 17);
+  doc.text("Prepared for early-stage screening", pageWidth - 75, 25);
 
-  y += 5;
-  doc.text(`CAPEX: ${formatEUR(capex)}`, 20, y); y += 7;
-  doc.text(`OPEX: ${formatEUR(opex)}/year`, 20, y); y += 7;
+  y = 45;
 
-  y += 5;
-  doc.text(`Revenue: ${formatEUR(revenue)}`, 20, y); y += 7;
-  doc.text(`EBITDA: ${formatEUR(ebitda)}`, 20, y); y += 7;
+  // Executive Summary
+  doc.setTextColor(0, 0, 0);
+  doc.setFontSize(14);
+  doc.text("Executive Summary", 14, y);
+  y += 8;
 
-  y += 5;
-  doc.text(`IRR: ${irr.toFixed(1)}%`, 20, y); y += 7;
-  doc.text(`NPV: ${formatEUR(npv)}`, 20, y); y += 7;
-  doc.text(`Payback: ${payback.toFixed(1)} years`, 20, y); y += 7;
+  doc.setFontSize(10);
+  const summaryLines = doc.splitTextToSize(interpretation, pageWidth - 28);
+  doc.text(summaryLines, 14, y);
+  y += summaryLines.length * 5 + 6;
 
-  y += 5;
-  doc.text(`Break-even CAPEX: ${formatEUR(breakEvenCapexPerMWh)} / MWh`, 20, y);
+  // Metric boxes
+  metricBox("IRR", `${irr.toFixed(1)}%`, 14, y);
+  metricBox("NPV", formatEUR(npv), 75, y);
+  metricBox("Payback", `${payback.toFixed(1)} y`, 136, y);
 
-  y += 10;
-  doc.text(`Score: ${score}/100`, 20, y);
+  y += 34;
 
-  doc.save("BESS_Investment_Report.pdf");
+  metricBox("Score", `${score}/100`, 14, y);
+  metricBox("CAPEX", formatEUR(capex), 75, y);
+  metricBox("Break-even", `${formatEUR(breakEvenCapexPerMWh)}/MWh`, 136, y);
+
+  y += 30;
+
+  sectionTitle("Project Configuration");
+  row("Power", `${mw} MW`);
+  row("Capacity", `${mwh} MWh`);
+  row("Lifetime", `${lifetime} years`);
+  row("Discount rate", `${discountRate}%`);
+
+  sectionTitle("Investment Assumptions");
+  row("CAPEX per MWh", `${formatEUR(capexPerMWh)} / MWh`);
+  row("Total CAPEX", formatEUR(capex));
+  row("Annual OPEX", formatEUR(opex));
+  row("OPEX assumption", `${opexPercent}% of CAPEX / year`);
+
+  sectionTitle("Revenue Assumptions");
+  row("FCR price", `EUR ${fcr}/MW/h`);
+  row("Arbitrage spread", `EUR ${spread}/MWh`);
+  row("Cycles per day", cycles);
+  row("FCR revenue", formatEUR(fcrRevenue));
+  row("Arbitrage revenue", formatEUR(arbitrageRevenue));
+  row("Total annual revenue", formatEUR(revenue));
+
+  sectionTitle("Financial Output");
+  row("EBITDA", formatEUR(ebitda));
+  row("Payback", `${payback.toFixed(1)} years`);
+  row("IRR", `${irr.toFixed(1)}%`);
+  row("NPV", formatEUR(npv));
+  row("Break-even CAPEX", `${formatEUR(breakEvenCapexPerMWh)} / MWh`);
+  row("Nordic Bankability Score", `${score}/100`);
+  row("Rating", rating);
+
+  // Footer
+  doc.setFontSize(8);
+  doc.setTextColor(120, 120, 120);
+  doc.text(
+    "Disclaimer: This report is an early-stage screening output. It is not investment advice. All assumptions should be validated through technical, commercial, legal and financial due diligence.",
+    14,
+    285,
+    { maxWidth: pageWidth - 28 }
+  );
+
+  doc.save("Nordic_BESS_Pro_Investment_Report.pdf");
 }
   
   const inputStyle = { width: "100%", padding: "10px", borderRadius: "10px", border: "1px solid #d1d5db", marginTop: "4px", marginBottom: "12px", fontSize: "16px" };
