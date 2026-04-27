@@ -370,7 +370,20 @@ y = 45;
     285,
     { maxWidth: pageWidth - 28 }
   );
+if (y > 260) {
+  doc.addPage();
+  y = 20;
+}
 
+y += 10;
+doc.setFontSize(8);
+doc.setTextColor(120, 120, 120);
+doc.text(
+  "Disclaimer: This report is an early-stage screening output. It is not investment advice. All assumptions should be validated through technical, commercial, legal and financial due diligence.",
+  14,
+  y,
+  { maxWidth: pageWidth - 28 }
+);
   doc.save("Nordic_BESS_Pro_Investment_Report.pdf");
 }
   
