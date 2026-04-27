@@ -138,7 +138,7 @@ const irrCurveData = [
   };
 });
 
-const maxIrr = Math.max(...irrCurveData.map((item) => item.irr), 1);
+const maxIrr = Math.max(...irrCurveData.map((item) => Math.max(item.irr, 0)), 1);
   
   const summaryText =
 `Nordic BESS Pro – Investor Summary
@@ -344,7 +344,7 @@ ${score >= 75
 
         <div style={{
           width: "42px",
-          height: `${Math.max(8, (item.irr / maxIrr) * 180)}px`,
+          height: `${Math.max(8, (Math.max(item.irr, 0) / maxIrr) * 180)}px`,
           borderRadius: "10px 10px 0 0",
           background: item.irr >= 12 ? "#10b981" : item.irr >= 8 ? "#f59e0b" : "#ef4444"
         }} />
