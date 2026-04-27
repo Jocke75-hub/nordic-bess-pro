@@ -280,7 +280,7 @@ function exportPDF() {
   doc.rect(0, 0, pageWidth, 35, "F");
 
   if (logo) {
-  doc.addImage(logo, "JPEG", 145, 7, 45, 18);
+  doc.addImage(logo, "JPEG", 160, 6, 35, 14);
 }
 
   doc.setTextColor(255, 255, 255);
@@ -292,7 +292,7 @@ function exportPDF() {
 
   doc.setFontSize(9);
   doc.text(`Generated: ${today}`, pageWidth - 55, 17);
-  doc.text("Prepared for early-stage screening", pageWidth - 75, 25);
+  doc.text("Prepared for early-stage screening", 14, 32);
 
   y = 45;
 
