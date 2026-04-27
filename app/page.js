@@ -275,31 +275,38 @@ function exportPDF() {
       ? "The project may be interesting, but the outcome is sensitive to FCR price, arbitrage spread, CAPEX and availability. Further due diligence is recommended before investment decision."
       : "Under current assumptions, the project does not appear bankable. CAPEX, revenue assumptions or market access would need to improve materially.";
 
-  // Header
-  doc.setFillColor(15, 23, 42);
-  doc.rect(0, 0, pageWidth, 35, "F");
+// Header background
+doc.setFillColor(15, 23, 42);
+doc.rect(0, 0, pageWidth, 35, "F");
 
-  if (logo) {
-  doc.addImage(logo, "JPEG", 160, 6, 35, 14);
-}
+// Logo (top right)
+doc.addImage(logo, "JPEG", pageWidth - 45, 6, 35, 14);
 
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(18);
-  doc.text("Nordic BESS Pro", 14, 17);
+// Text styling
+doc.setTextColor(255, 255, 255);
 
-  doc.setFontSize(10);
-  doc.text("Investment Report", 14, 25);
+// LEFT
+doc.setFontSize(16);
+doc.text("Nordic BESS Pro", 14, 16);
 
-  doc.setFontSize(9);
-  doc.text(`Generated: ${today}`, 14, 17);
-  doc.text(
+doc.setFontSize(10);
+doc.text("Investment Report", 14, 24);
+
+// CENTER
+doc.setFontSize(10);
+doc.text(
   "Prepared for early-stage screening",
   pageWidth / 2,
-  28,
+  24,
   { align: "center" }
 );
 
-  y = 45;
+// LEFT meta
+doc.setFontSize(9);
+doc.text(`Generated: ${today}`, 14, 30);
+
+// Continue content below header
+y = 45;
 
   // Executive Summary
   doc.setTextColor(0, 0, 0);
