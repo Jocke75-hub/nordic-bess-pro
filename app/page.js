@@ -216,47 +216,40 @@ ${score >= 75
     }
   }
 
-  function exportPDF() {
-  const content = `
-NORDIC BESS PRO – INVESTMENT REPORT
+ function exportPDF() {
+  const doc = new jsPDF();
 
-Project:
-Power: ${mw} MW
-Capacity: ${mwh} MWh
+  let y = 20;
 
-CAPEX:
-${formatEUR(capex)} (${formatEUR(capexPerMWh)} / MWh)
+  doc.setFontSize(18);
+  doc.text("Nordic BESS Pro – Investment Report", 20, y);
 
-OPEX:
-${formatEUR(opex)} per year
+  y += 10;
+  doc.setFontSize(12);
 
-Revenue:
-FCR: ${formatEUR(fcrRevenue)}
-Arbitrage: ${formatEUR(arbitrageRevenue)}
-Total: ${formatEUR(revenue)}
+  doc.text(`Power: ${mw} MW`, 20, y); y += 7;
+  doc.text(`Capacity: ${mwh} MWh`, 20, y); y += 7;
 
-Financials:
-EBITDA: ${formatEUR(ebitda)}
-Payback: ${payback.toFixed(1)} years
-IRR: ${irr.toFixed(1)}%
-NPV: ${formatEUR(npv)}
+  y += 5;
+  doc.text(`CAPEX: ${formatEUR(capex)}`, 20, y); y += 7;
+  doc.text(`OPEX: ${formatEUR(opex)}/year`, 20, y); y += 7;
 
-Break-even CAPEX:
-${formatEUR(breakEvenCapexPerMWh)} / MWh
+  y += 5;
+  doc.text(`Revenue: ${formatEUR(revenue)}`, 20, y); y += 7;
+  doc.text(`EBITDA: ${formatEUR(ebitda)}`, 20, y); y += 7;
 
-Score:
-${score}/100
+  y += 5;
+  doc.text(`IRR: ${irr.toFixed(1)}%`, 20, y); y += 7;
+  doc.text(`NPV: ${formatEUR(npv)}`, 20, y); y += 7;
+  doc.text(`Payback: ${payback.toFixed(1)} years`, 20, y); y += 7;
 
-Generated via Nordic BESS Pro
-  `;
+  y += 5;
+  doc.text(`Break-even CAPEX: ${formatEUR(breakEvenCapexPerMWh)} / MWh`, 20, y);
 
-  const blob = new Blob([content], { type: "text/plain;charset=utf-8;" });
-  const link = document.createElement("a");
+  y += 10;
+  doc.text(`Score: ${score}/100`, 20, y);
 
-  link.href = URL.createObjectURL(blob);
-  link.download = "BESS_Investment_Report.txt";
-
-  link.click();
+  doc.save("BESS_Investment_Report.pdf");
 }
   
   const inputStyle = { width: "100%", padding: "10px", borderRadius: "10px", border: "1px solid #d1d5db", marginTop: "4px", marginBottom: "12px", fontSize: "16px" };
