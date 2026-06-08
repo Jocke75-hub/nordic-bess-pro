@@ -331,7 +331,7 @@ doc.setFontSize(9);
 doc.text(`Generated: ${today} | Currency: ${currency}`, 14, 48);
 
 // Continue content below header
-y = 70;
+y = 58;
   
 doc.setFontSize(10);
 doc.setTextColor(80, 80, 80);
