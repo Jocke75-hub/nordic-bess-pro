@@ -430,6 +430,16 @@ doc.text(
     <div style={{ minHeight: "100vh", background: "#0f172a", padding: "24px", fontFamily: "Arial" }}>
       <div style={{ maxWidth: 920, margin: "0 auto" }}>
         <div style={{ color: "white", marginBottom: "24px" }}>
+  <img
+  src="/nexatrade-logo.png"
+  alt="NexaTrade Energy Solutions"
+  style={{
+    height: "72px",
+    maxWidth: "420px",
+    objectFit: "contain",
+    marginBottom: "18px"
+  }}
+/>
           <p style={{ color: "#5eead4", letterSpacing: "2px", fontSize: "12px" }}>BESS INVESTMENT PRO</p>
           <h1 style={{ fontSize: "38px", margin: "0 0 8px" }}>⚡ ⚡ BESS Investment Pro</h1>
           <p style={{ color: "#cbd5e1", fontSize: "17px" }}>
