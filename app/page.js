@@ -459,7 +459,7 @@ doc.text(
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "18px" }}>
           <div style={cardStyle}>
-            <h3>Project Inputs</h3>
+            <h3>Project Configuration</h3>
             <label>Power, MW</label><input style={inputStyle} value={mw} onChange={(e) => setMw(Number(e.target.value))} />
             <label>Capacity, MWh</label><input style={inputStyle} value={mwh} onChange={(e) => setMwh(Number(e.target.value))} />
             <label>CAPEX €/MWh</label><input style={inputStyle} value={capexPerMWh} onChange={(e) => setCapexPerMWh(Number(e.target.value))} />
@@ -469,7 +469,7 @@ doc.text(
           </div>
 
           <div style={cardStyle}>
-            <h3>Revenue Inputs</h3>
+            <h3>Revenue Assumptions</h3>
             <label>Arbitrage spread €/MWh</label><input style={inputStyle} value={spread} onChange={(e) => setSpread(Number(e.target.value))} />
             <label>Cycles/day</label><input style={inputStyle} value={cycles} onChange={(e) => setCycles(Number(e.target.value))} />
             <label>FCR price €/MW/h</label><input style={inputStyle} value={fcr} onChange={(e) => setFcr(Number(e.target.value))} />
