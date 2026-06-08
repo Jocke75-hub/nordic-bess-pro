@@ -300,7 +300,7 @@ async function exportPDF() {
 
 // Header background
 doc.setFillColor(15, 23, 42);
-doc.rect(0, 0, pageWidth, 35, "F");
+doc.rect(0, 0, pageWidth, 55, "F");
 
 // Logo (top right)
 doc.addImage(logo, "PNG", pageWidth - 65, 5, 55, 18);
@@ -315,7 +315,7 @@ doc.text("BESS Investment Report", 14, 14);
 doc.setFontSize(8);
 doc.text(`Project: ${projectName || "Not specified"}`, 14, 21);
 doc.text(`Client: ${clientName || "Not specified"}`, 14, 26);
-doc.text(`Country: ${country || "Not specified"}`, 14, 36);
+doc.text(`Country: ${country || "Not specified"}`, 14, 42);
 
 // CENTER
 doc.setFontSize(10);
@@ -328,10 +328,10 @@ doc.text(
 
 // LEFT meta
 doc.setFontSize(9);
-doc.text(`Generated: ${today} | Currency: ${currency}`, 14, 42);
+doc.text(`Generated: ${today} | Currency: ${currency}`, 14, 48);
 
 // Continue content below header
-y = 55;
+y = 70;
   
 doc.setFontSize(10);
 doc.setTextColor(80, 80, 80);
