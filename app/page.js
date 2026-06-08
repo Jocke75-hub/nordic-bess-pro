@@ -380,6 +380,13 @@ y += 36;
   row("Annual OPEX", formatCurrency(opex));
   row("OPEX assumption", `${opexPercent}% of CAPEX / year`);
 
+  const revenueRequiredSpace = 60;
+
+if (y + revenueRequiredSpace > 280) {
+  doc.addPage();
+  y = 20;
+}
+  
   sectionTitle("Revenue Assumptions");
   row("FCR price", `EUR ${fcr}/MW/h`);
   row("Arbitrage spread", `EUR ${spread}/MWh`);
@@ -388,10 +395,6 @@ y += 36;
   row("Arbitrage revenue", formatCurrency(arbitrageRevenue));
   row("Total annual revenue", formatCurrency(revenue));
 
-  if (y > 200) {
-  doc.addPage();
-  y = 20;
-}
   const requiredSpace = 80;
 
 if (y + requiredSpace > 280) {
