@@ -309,11 +309,13 @@ doc.addImage(logo, "PNG", pageWidth - 65, 5, 55, 18);
 doc.setTextColor(255, 255, 255);
 
 // LEFT
-doc.setFontSize(16);
-doc.text("NexaTrade Oy Ltd", 14, 16);
+doc.setFontSize(15);
+doc.text("BESS Investment Report", 14, 14);
 
-doc.setFontSize(10);
-doc.text("BESS Investment Report", 14, 24);
+doc.setFontSize(8);
+doc.text(`Project: ${projectName || "Not specified"}`, 14, 21);
+doc.text(`Client: ${clientName || "Not specified"}`, 14, 26);
+doc.text(`Country: ${country || "Not specified"}`, 14, 31);
 
 // CENTER
 doc.setFontSize(10);
@@ -326,7 +328,7 @@ doc.text(
 
 // LEFT meta
 doc.setFontSize(9);
-doc.text(`Generated: ${today}`, 14, 30);
+doc.text(`Generated: ${today} | Currency: ${currency}`, 14, 34);
 
 // Continue content below header
 y = 45;
