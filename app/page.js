@@ -169,7 +169,7 @@ const irrCurveData = [
 const maxIrr = Math.max(...irrCurveData.map((item) => Math.max(item.irr, 0)), 1);
   
   const summaryText =
-`Nordic BESS Pro – Investor Summary
+`BESS Pro – Investor Summary
 
 Project size:
 - Power: ${mw} MW
@@ -194,7 +194,7 @@ Financial output:
 - Payback: ${payback.toFixed(1)} years
 - IRR: ${irr.toFixed(1)}%
 - NPV: ${formatEUR(npv)}
-- Nordic Bankability Score: ${score}/100
+- Bankability Score: ${score}/100
 
 Interpretation:
 ${score >= 75
@@ -302,7 +302,7 @@ doc.setFontSize(16);
 doc.text("NexaTrade Oy Ltd", 14, 16);
 
 doc.setFontSize(10);
-doc.text("Nordic BESS Investment Report", 14, 24);
+doc.text("BESS Investment Report", 14, 24);
 
 // CENTER
 doc.setFontSize(10);
@@ -417,7 +417,7 @@ doc.text(
   y,
   { maxWidth: pageWidth - 28 }
 );
-  doc.save("Nordic_BESS_Pro_Investment_Report.pdf");
+  doc.save("BESS_Pro_Investment_Report.pdf");
 }
   
   const inputStyle = { width: "100%", padding: "10px", borderRadius: "10px", border: "1px solid #d1d5db", marginTop: "4px", marginBottom: "12px", fontSize: "16px" };
@@ -514,7 +514,7 @@ doc.text(
   </div>
 </div>
         <div style={cardStyle}>
-          <h3>Nordic Bankability Score</h3>
+          <h3>Bankability Score</h3>
           <div style={{ display: "flex", alignItems: "center", gap: "18px", flexWrap: "wrap" }}>
             <div style={{
               width: "120px", height: "120px", borderRadius: "50%",
