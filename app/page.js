@@ -8,6 +8,10 @@ const appLogo = "PASTE_BASE64_LOGO_HERE";
 export default function Home() {
   const [mw, setMw] = useState(5);
   const [mwh, setMwh] = useState(10);
+  const [projectName, setProjectName] = useState("");
+const [clientName, setClientName] = useState("");
+const [country, setCountry] = useState("");
+const [currency, setCurrency] = useState("EUR");
   const [spread, setSpread] = useState(45);
   const [cycles, setCycles] = useState(1);
   const [fcr, setFcr] = useState(12);
@@ -461,7 +465,7 @@ doc.text(
             <button onClick={() => applyScenario("upside")} style={buttonStyle("#0ea5e9")}>Upside</button>
           </div>
         </div>
-
+        
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "18px" }}>
           <div style={cardStyle}>
             <h3>Project Configuration</h3>
@@ -472,6 +476,41 @@ doc.text(
             <label>Lifetime, years</label><input style={inputStyle} value={lifetime} onChange={(e) => setLifetime(Number(e.target.value))} />
             <label>Discount rate, %</label><input style={inputStyle} value={discountRate} onChange={(e) => setDiscountRate(Number(e.target.value))} />
           </div>
+
+          <div style={cardStyle}>
+  <h3>Project Information</h3>
+
+  <label>Project Name</label>
+  <input
+    style={inputStyle}
+    value={projectName}
+    onChange={(e) => setProjectName(e.target.value)}
+  />
+
+  <label>Client / Company</label>
+  <input
+    style={inputStyle}
+    value={clientName}
+    onChange={(e) => setClientName(e.target.value)}
+  />
+
+  <label>Country</label>
+  <input
+    style={inputStyle}
+    value={country}
+    onChange={(e) => setCountry(e.target.value)}
+  />
+
+  <label>Currency</label>
+  <select
+    style={inputStyle}
+    value={currency}
+    onChange={(e) => setCurrency(e.target.value)}
+  >
+    <option value="EUR">EUR (€)</option>
+    <option value="USD">USD ($)</option>
+  </select>
+</div>
 
           <div style={cardStyle}>
             <h3>Revenue Assumptions</h3>
