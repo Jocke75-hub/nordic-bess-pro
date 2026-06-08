@@ -315,7 +315,7 @@ doc.text("BESS Investment Report", 14, 14);
 doc.setFontSize(8);
 doc.text(`Project: ${projectName || "Not specified"}`, 14, 21);
 doc.text(`Client: ${clientName || "Not specified"}`, 14, 26);
-doc.text(`Country: ${country || "Not specified"}`, 14, 31);
+doc.text(`Country: ${country || "Not specified"}`, 14, 36);
 
 // CENTER
 doc.setFontSize(10);
@@ -328,14 +328,13 @@ doc.text(
 
 // LEFT meta
 doc.setFontSize(9);
-doc.text(`Generated: ${today} | Currency: ${currency}`, 14, 34);
+doc.text(`Generated: ${today} | Currency: ${currency}`, 14, 42);
 
 // Continue content below header
-y = 45;
+y = 55;
   
 doc.setFontSize(10);
 doc.setTextColor(80, 80, 80);
-doc.text("Prepared by NexaTrade Oy Ltd", 14, y);
 
   y += 8;
   
@@ -430,7 +429,9 @@ doc.text(
   y,
   { maxWidth: pageWidth - 28 }
 );
-  doc.save("BESS_Pro_Investment_Report.pdf");
+  doc.save(
+  `${(projectName || "BESS_Project").replace(/\s+/g, "_")}_Investment_Report.pdf`
+);
 }
   
   const inputStyle = { width: "100%", padding: "10px", borderRadius: "10px", border: "1px solid #d1d5db", marginTop: "4px", marginBottom: "12px", fontSize: "16px" };
