@@ -3,6 +3,8 @@
 import { useState } from "react";
 import jsPDF from "jspdf";
 
+const appLogo = "PASTE_BASE64_LOGO_HERE";
+
 export default function Home() {
   const [mw, setMw] = useState(5);
   const [mwh, setMwh] = useState(10);
