@@ -440,7 +440,6 @@ doc.text(
     marginBottom: "18px"
   }}
 />
-          <p style={{ color: "#5eead4", letterSpacing: "2px", fontSize: "12px" }}>BESS INVESTMENT PRO</p>
           <h1 style={{ fontSize: "38px", margin: "0 0 8px" }}>⚡ ⚡ BESS Investment Pro</h1>
           <p style={{ color: "#cbd5e1", fontSize: "17px" }}>
             Professional battery energy storage investment screening tool for evaluating project profitability, bankability and financial performance.
