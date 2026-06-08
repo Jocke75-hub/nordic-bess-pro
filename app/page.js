@@ -250,7 +250,7 @@ async function exportPDF() {
   }
 
   function row(label, value) {
-    doc.setFontSize(10);
+    doc.setFontSize(8);
     doc.setTextColor(80, 80, 80);
     doc.text(label, 18, y);
     doc.setTextColor(0, 0, 0);
