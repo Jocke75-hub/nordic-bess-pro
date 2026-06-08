@@ -427,9 +427,13 @@ row("Rating", rating);
 y += 10;
 doc.setFontSize(9);
 doc.setTextColor(100, 100, 100);
-doc.text("NexaTrade Oy Ltd – Energy Advisory & Project Development", 14, y);
+doc.text("Generated using NexaTrade BESS Investment Pro", 14, y);
+
+y += 5;
+
+doc.text("www.nexatrade.io | info@nexatrade.io", 14, y);
   
-y += 10;
+y += 8;
 doc.setFontSize(8);
 doc.setTextColor(120, 120, 120);
 doc.text(
