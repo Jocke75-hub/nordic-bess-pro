@@ -119,12 +119,12 @@ function findBreakEvenCapexPerMWh() {
 
   const score = calculateScore();
 
-  const formatEUR = (value) =>
-    new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "EUR",
-      maximumFractionDigits: 0,
-    }).format(value);
+  const formatCurrency = (value) =>
+  new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: currency,
+    maximumFractionDigits: 0,
+  }).format(value);
 
   function runSensitivity(capexMultiplier) {
   const adjustedCapex = capex * capexMultiplier;
@@ -182,8 +182,8 @@ Project size:
 - Capacity: ${mwh} MWh
 
 Investment assumptions:
-- CAPEX: ${formatEUR(capex)} (${formatEUR(capexPerMWh)} per MWh)
-- Annual OPEX: ${formatEUR(opex)}
+- CAPEX: ${formatCurrency(capex)} (${formatCurrency(capexPerMWh)} per MWh)
+- Annual OPEX: ${formatCurrency(opex)}
 - Lifetime: ${lifetime} years
 - Discount rate: ${discountRate}%
 
@@ -191,15 +191,15 @@ Revenue assumptions:
 - FCR price: €${fcr}/MW/h
 - Arbitrage spread: €${spread}/MWh
 - Cycles per day: ${cycles}
-- FCR revenue: ${formatEUR(fcrRevenue)}
-- Arbitrage revenue: ${formatEUR(arbitrageRevenue)}
-- Total annual revenue: ${formatEUR(revenue)}
+- FCR revenue: ${formatCurrency(fcrRevenue)}
+- Arbitrage revenue: ${formatCurrency(arbitrageRevenue)}
+- Total annual revenue: ${formatCurrency(revenue)}
 
 Financial output:
-- EBITDA: ${formatEUR(ebitda)}
+- EBITDA: ${formatCurrency(ebitda)}
 - Payback: ${payback.toFixed(1)} years
 - IRR: ${irr.toFixed(1)}%
-- NPV: ${formatEUR(npv)}
+- NPV: ${formatCurrency(npv)}
 - Bankability Score: ${score}/100
 
 Interpretation:
@@ -350,14 +350,14 @@ doc.text("Prepared by NexaTrade Oy Ltd", 14, y);
 
   // KPI cards
 kpiCard("IRR", `${irr.toFixed(1)}%`, 14, y);
-kpiCard("NPV", formatEUR(npv), 75, y);
+kpiCard("NPV", formatCurrency(npv), 75, y);
 kpiCard("Payback", `${payback.toFixed(1)} y`, 136, y);
 
 y += 34;
 
 kpiCard("Score", `${score}/100`, 14, y);
-kpiCard("Total CAPEX", formatEUR(capex), 75, y);
-kpiCard("Break-even", `${formatEUR(breakEvenCapexPerMWh)}/MWh`, 136, y);
+kpiCard("Total CAPEX", formatCurrency(capex), 75, y);
+kpiCard("Break-even", `${formatCurrency(breakEvenCapexPerMWh)}/MWh`, 136, y);
 
 y += 36;
 
@@ -368,18 +368,18 @@ y += 36;
   row("Discount rate", `${discountRate}%`);
 
   sectionTitle("Investment Assumptions");
-  row("CAPEX per MWh", `${formatEUR(capexPerMWh)} / MWh`);
-  row("Total CAPEX", formatEUR(capex));
-  row("Annual OPEX", formatEUR(opex));
+  row("CAPEX per MWh", `${formatCurrency(capexPerMWh)} / MWh`);
+  row("Total CAPEX", formatCurrency(capex));
+  row("Annual OPEX", formatCurrency(opex));
   row("OPEX assumption", `${opexPercent}% of CAPEX / year`);
 
   sectionTitle("Revenue Assumptions");
   row("FCR price", `EUR ${fcr}/MW/h`);
   row("Arbitrage spread", `EUR ${spread}/MWh`);
   row("Cycles per day", cycles);
-  row("FCR revenue", formatEUR(fcrRevenue));
-  row("Arbitrage revenue", formatEUR(arbitrageRevenue));
-  row("Total annual revenue", formatEUR(revenue));
+  row("FCR revenue", formatCurrency(fcrRevenue));
+  row("Arbitrage revenue", formatCurrency(arbitrageRevenue));
+  row("Total annual revenue", formatCurrency(revenue));
 
   if (y > 200) {
   doc.addPage();
@@ -394,14 +394,14 @@ if (y + requiredSpace > 280) {
 
 sectionTitle("Financial Output");
 
-kpiCard("EBITDA", formatEUR(ebitda), 14, y);
+kpiCard("EBITDA", formatCurrency(ebitda), 14, y);
 kpiCard("IRR", `${irr.toFixed(1)}%`, 75, y);
-kpiCard("NPV", formatEUR(npv), 136, y);
+kpiCard("NPV", formatCurrency(npv), 136, y);
 
 y += 34;
 
 kpiCard("Payback", `${payback.toFixed(1)} y`, 14, y);
-kpiCard("Break-even", `${formatEUR(breakEvenCapexPerMWh)}/MWh`, 75, y);
+kpiCard("Break-even", `${formatCurrency(breakEvenCapexPerMWh)}/MWh`, 75, y);
 kpiCard("Score", `${score}/100`, 136, y);
 
 y += 36;
@@ -529,12 +529,12 @@ doc.text(
         <div style={cardStyle}>
           <h3>Investment Dashboard</h3>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "12px" }}>
-            <div style={metricStyle}><small>Total CAPEX</small><h2>{formatEUR(capex)}</h2></div>
-            <div style={metricStyle}><small>Annual Revenue</small><h2>{formatEUR(revenue)}</h2></div>
-            <div style={metricStyle}><small>EBITDA</small><h2>{formatEUR(ebitda)}</h2></div>
+            <div style={metricStyle}><small>Total CAPEX</small><h2>{formatCurrency(capex)}</h2></div>
+            <div style={metricStyle}><small>Annual Revenue</small><h2>{formatCurrency(revenue)}</h2></div>
+            <div style={metricStyle}><small>EBITDA</small><h2>{formatCurrency(ebitda)}</h2></div>
             <div style={metricStyle}><small>Payback</small><h2>{payback.toFixed(1)} y</h2></div>
             <div style={metricStyle}><small>IRR</small><h2>{irr.toFixed(1)}%</h2></div>
-            <div style={metricStyle}><small>NPV</small><h2>{formatEUR(npv)}</h2></div>
+            <div style={metricStyle}><small>NPV</small><h2>{formatCurrency(npv)}</h2></div>
           </div>
         </div>
               
@@ -556,7 +556,7 @@ doc.text(
       fontSize: "22px",
       fontWeight: "bold"
     }}>
-      {formatEUR(breakEvenCapexPerMWh)} / MWh
+      {formatCurrency(breakEvenCapexPerMWh)} / MWh
     </div>
 
     <div style={{ maxWidth: "420px" }}>
@@ -616,11 +616,11 @@ doc.text(
           return (
             <tr key={item.label}>
               <td style={tableCell}><strong>{item.label}</strong></td>
-              <td style={tableCell}>{formatEUR(s.capex)}</td>
-              <td style={tableCell}>{formatEUR(s.ebitda)}</td>
+              <td style={tableCell}>{formatCurrency(s.capex)}</td>
+              <td style={tableCell}>{formatCurrency(s.ebitda)}</td>
               <td style={tableCell}>{s.payback.toFixed(1)} y</td>
               <td style={tableCell}>{s.irr.toFixed(1)}%</td>
-              <td style={tableCell}>{formatEUR(s.npv)}</td>
+              <td style={tableCell}>{formatCurrency(s.npv)}</td>
             </tr>
           );
         })}
@@ -683,7 +683,7 @@ doc.text(
   </div>
 
   <p style={{ marginTop: "12px", color: "#475569" }}>
-    Base CAPEX: <strong>{formatEUR(capex)}</strong>.  
+    Base CAPEX: <strong>{formatCurrency(capex)}</strong>.  
     Lower CAPEX improves IRR, while higher CAPEX reduces bankability.
   </p>
 </div>
@@ -738,9 +738,9 @@ doc.text(
 
         <div style={cardStyle}>
           <h3>Revenue Breakdown</h3>
-          <p>FCR revenue: <strong>{formatEUR(fcrRevenue)}</strong></p>
-          <p>Arbitrage revenue: <strong>{formatEUR(arbitrageRevenue)}</strong></p>
-          <p>Annual OPEX: <strong>{formatEUR(opex)}</strong></p>
+          <p>FCR revenue: <strong>{formatCurrency(fcrRevenue)}</strong></p>
+          <p>Arbitrage revenue: <strong>{formatCurrency(arbitrageRevenue)}</strong></p>
+          <p>Annual OPEX: <strong>{formatCurrency(opex)}</strong></p>
         </div>
       </div>
     </div>
