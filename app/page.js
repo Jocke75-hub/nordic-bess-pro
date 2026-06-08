@@ -175,7 +175,13 @@ const irrCurveData = [
 const maxIrr = Math.max(...irrCurveData.map((item) => Math.max(item.irr, 0)), 1);
   
   const summaryText =
-`BESS Pro – Investor Summary
+`BESS Investment Pro – Investor Summary
+
+Project information:
+- Project: ${projectName || "Not specified"}
+- Client: ${clientName || "Not specified"}
+- Country: ${country || "Not specified"}
+- Currency: ${currency}
 
 Project size:
 - Power: ${mw} MW
