@@ -1,6 +1,6 @@
 import "./globals.css";
 export const metadata = {
-  title: "Nordic BESS Pro",
+  title: "NexaTrade BESS Pro",
   description: "Nordic BESS investment calculator",
 };
 
